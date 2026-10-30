@@ -5,6 +5,7 @@ import { loadPeaks } from './data/peaks';
 import type { Peak, Region } from './data/types';
 import MapView, { type MapViewHandle } from './map/MapView';
 import StyleSwitch from './map/StyleSwitch';
+import StatusNotices from './pwa/StatusNotices';
 import { loadStyleChoice, saveStyleChoice, type MapStyleId } from './map/styles';
 import { ascentsOfPeak, countByPeak } from './domain/ascents';
 import { peakListEntries, progress, type ListFilter, type ListSort } from './domain/peakList';
@@ -129,11 +130,7 @@ export default function App() {
           hidden={!!selectedPeak}
         />
       )}
-      {loadError && (
-        <p className="toast" role="alert">
-          {loadError}
-        </p>
-      )}
+      <StatusNotices error={loadError} />
       {selectedPeak && (
         <PeakPanel
           key={selectedPeak.id}

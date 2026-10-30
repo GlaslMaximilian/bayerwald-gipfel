@@ -85,20 +85,6 @@ body {
   color: var(--color-text-muted);
 }
 
-.toast {
-  position: absolute;
-  top: calc(12px + env(safe-area-inset-top));
-  left: 50%;
-  z-index: 4;
-  margin: 0;
-  padding: 8px 14px;
-  transform: translateX(-50%);
-  border-radius: 8px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: var(--shadow);
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;

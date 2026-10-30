@@ -1,6 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const ARBER = { name: 'Großer Arber', lon: 13.13619, lat: 49.112472 };
+const ARBER = {
+  id: 'osm:node/26863050',
+  name: 'Großer Arber',
+  lon: 13.13619,
+  lat: 49.112472,
+};
 
 /** Wartet, bis der Kartenstil geladen ist und Gipfel gerendert sind. */
 async function waitForPeaks(page: Page) {
@@ -54,13 +59,28 @@ for (const colorScheme of ['light', 'dark'] as const) {
   });
 }
 
-test('Tippen auf einen Gipfel öffnet das Detail-Panel', async ({ page }, testInfo) => {
-  await page.goto('./');
-  await waitForPeaks(page);
-
+/** Tippt auf den Großen Arber. */
+async function clickArber(page: Page) {
   const point = await page.evaluate(({ lon, lat }) => window.__map!.project([lon, lat]), ARBER);
   const box = (await page.getByTestId('map').boundingBox())!;
   await page.mouse.click(box.x + point.x, box.y + point.y);
+}
+
+/** Anzahl der Besteigungen, mit der der Arber-Marker gerendert wird. */
+async function arberMarkerCount(page: Page) {
+  return page.evaluate(
+    (id) =>
+      window
+        .__map!.queryRenderedFeatures({ layers: ['peaks-marker'] })
+        .find((f) => f.properties.id === id)?.properties.count as number | undefined,
+    ARBER.id,
+  );
+}
+
+test('Tippen auf einen Gipfel öffnet das Detail-Panel', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await waitForPeaks(page);
+  await clickArber(page);
 
   const panel = page.getByRole('complementary');
   await expect(panel.getByRole('heading', { name: ARBER.name })).toBeVisible();
@@ -89,4 +109,58 @@ test('Stilwechsel auf Satellit bleibt nach dem Neuladen erhalten', async ({ page
     'true',
   );
   await waitForPeaks(page);
+});
+
+test('Abhaken, Mehrfachbesteigung und Löschen bleiben nach dem Neuladen erhalten', async ({
+  page,
+}, testInfo) => {
+  await page.goto('./');
+  await waitForPeaks(page);
+  await page.evaluate(
+    ({ lon, lat }) => window.__map!.jumpTo({ center: [lon, lat], zoom: 12 }),
+    ARBER,
+  );
+  await waitForPeaks(page);
+  await clickArber(page);
+
+  const panel = page.getByRole('complementary');
+  const status = panel.getByTestId('ascent-status');
+  await expect(status).toHaveText('Noch nicht bestiegen');
+  expect(await arberMarkerCount(page)).toBe(0);
+
+  // Abhaken mit Notiz
+  await panel.getByRole('button', { name: 'Bestiegen', exact: true }).click();
+  await panel.getByLabel('Notiz (optional)').fill('Sonnenaufgang');
+  await panel.getByRole('button', { name: 'Speichern' }).click();
+  await expect(status).toHaveText('1× bestiegen');
+  await expect.poll(() => arberMarkerCount(page)).toBe(1);
+  await screenshot(page, 'abgehakt', testInfo.project.name);
+
+  // Neu laden: Besteigung und Marker sind noch da
+  await page.reload();
+  await waitForPeaks(page);
+  await page.evaluate(
+    ({ lon, lat }) => window.__map!.jumpTo({ center: [lon, lat], zoom: 12 }),
+    ARBER,
+  );
+  await waitForPeaks(page);
+  await expect.poll(() => arberMarkerCount(page)).toBe(1);
+  await clickArber(page);
+  await expect(status).toHaveText('1× bestiegen');
+  await expect(panel.getByText('Sonnenaufgang')).toBeVisible();
+
+  // Zweite Besteigung an einem früheren Tag
+  await panel.getByRole('button', { name: 'Erneut bestiegen' }).click();
+  await panel.getByLabel('Datum').fill('2025-07-01');
+  await panel.getByRole('button', { name: 'Speichern' }).click();
+  await expect(status).toHaveText('2× bestiegen');
+  await expect(panel.getByRole('listitem')).toHaveCount(2);
+  await screenshot(page, 'mehrfach', testInfo.project.name);
+
+  // Löschen mit Bestätigung
+  await panel.getByRole('button', { name: 'Besteigung vom 01.07.2025 löschen' }).click();
+  await panel.getByRole('button', { name: 'Löschen', exact: true }).click();
+  await expect(status).toHaveText('1× bestiegen');
+  await expect(panel.getByRole('listitem')).toHaveCount(1);
+  await expect.poll(() => arberMarkerCount(page)).toBe(1);
 });

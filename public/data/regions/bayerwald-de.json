@@ -1,0 +1,1138 @@
+[
+  {
+    "id": "osm:node/26863050",
+    "name": "Großer Arber",
+    "ele": 1456,
+    "lat": 49.112472,
+    "lon": 13.13619,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/96405646",
+    "name": "Großer Rachel",
+    "ele": 1453,
+    "lat": 48.978535,
+    "lon": 13.388972,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2413491281",
+    "name": "Kleiner Rachel",
+    "ele": 1399,
+    "lat": 48.983702,
+    "lon": 13.379146,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/96428405",
+    "name": "Kleiner Arber",
+    "ele": 1384,
+    "lat": 49.113301,
+    "lon": 13.110072,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/576571442",
+    "name": "Plattenhausenriegel",
+    "ele": 1376,
+    "lat": 48.964216,
+    "lon": 13.447941,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/410947529",
+    "name": "Lusen",
+    "ele": 1373,
+    "lat": 48.939196,
+    "lon": 13.506778,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/577336416",
+    "name": "Velká Mokrůvka",
+    "ele": 1370,
+    "lat": 48.954631,
+    "lon": 13.506526,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1774677537",
+    "name": "Bayerischer Plöckenstein",
+    "ele": 1362,
+    "lat": 48.772036,
+    "lon": 13.826963,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/577323244",
+    "name": "Špičník",
+    "ele": 1351,
+    "lat": 48.961024,
+    "lon": 13.463758,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1421707148",
+    "name": "Großer Spitzberg",
+    "ele": 1350,
+    "lat": 48.958326,
+    "lon": 13.461994,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/469869745",
+    "name": "Steinfleckberg",
+    "ele": 1342,
+    "lat": 48.951276,
+    "lon": 13.522404,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/270091940",
+    "name": "Vysoký hřeben",
+    "ele": 1341,
+    "lat": 48.774687,
+    "lon": 13.813786,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996234833",
+    "name": "Mittagsplatzl",
+    "ele": 1340,
+    "lat": 49.093397,
+    "lon": 13.142848,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1401427466",
+    "name": "Plesná",
+    "ele": 1338,
+    "lat": 49.105064,
+    "lon": 13.31289,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3459052673",
+    "name": "Svaroh",
+    "ele": 1334,
+    "lat": 49.173978,
+    "lon": 13.166453,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/95964264",
+    "name": "Dreisessel",
+    "ele": 1333,
+    "lat": 48.780679,
+    "lon": 13.803177,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/95964265",
+    "name": "Hochstein",
+    "ele": 1333,
+    "lat": 48.784749,
+    "lon": 13.802777,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/7773745925",
+    "name": "Malá Mokrůvka",
+    "ele": 1331,
+    "lat": 48.969554,
+    "lon": 13.507388,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3481238184",
+    "name": "Schuhnagelkopf",
+    "ele": 1317,
+    "lat": 48.969406,
+    "lon": 13.389347,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/4978104062",
+    "name": "Großer Falkenstein",
+    "ele": 1315,
+    "lat": 49.084737,
+    "lon": 13.279982,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3480665605",
+    "name": "Bärenlochriegel",
+    "ele": 1304,
+    "lat": 48.96649,
+    "lon": 13.440584,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/96428403",
+    "name": "Großer Osser",
+    "ele": 1293,
+    "lat": 49.203183,
+    "lon": 13.109784,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/403303195",
+    "name": "Enzian",
+    "ele": 1287,
+    "lat": 49.123707,
+    "lon": 13.083063,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3242752334",
+    "name": "Markkopf",
+    "ele": 1280,
+    "lat": 48.968686,
+    "lon": 13.515078,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/7972230710",
+    "name": "Hoher Filzberg",
+    "ele": 1279,
+    "lat": 48.936715,
+    "lon": 13.521064,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/577336417",
+    "name": "V koutě",
+    "ele": 1276,
+    "lat": 48.972716,
+    "lon": 13.425877,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996235651",
+    "name": "Ruckowitzberg",
+    "ele": 1269,
+    "lat": 49.094751,
+    "lon": 13.282689,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/265094431",
+    "name": "Kleiner Osser",
+    "ele": 1266,
+    "lat": 49.201687,
+    "lon": 13.103084,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996241295",
+    "name": "Kiesruck",
+    "ele": 1265,
+    "lat": 49.052719,
+    "lon": 13.345327,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996252119",
+    "name": "Siebensteinkopf",
+    "ele": 1263,
+    "lat": 48.964785,
+    "lon": 13.575039,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/403307514",
+    "name": "Heugstatt",
+    "ele": 1262,
+    "lat": 49.129236,
+    "lon": 13.06822,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3799225463",
+    "name": "Sulzriegel",
+    "ele": 1260,
+    "lat": 48.924152,
+    "lon": 13.526051,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996241293",
+    "name": "Großer Hahnenbogen",
+    "ele": 1257,
+    "lat": 49.045233,
+    "lon": 13.363104,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3242754647",
+    "name": "Mrtvý vrch",
+    "ele": 1254,
+    "lat": 48.973296,
+    "lon": 13.522069,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12229267567",
+    "name": "Hochwiesriegel",
+    "ele": 1243,
+    "lat": 49.09782,
+    "lon": 13.278673,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/814886698",
+    "name": "Habergrasberg",
+    "ele": 1235,
+    "lat": 48.785,
+    "lon": 13.78859,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/873636642",
+    "name": "Schwarzeck",
+    "ele": 1235,
+    "lat": 49.14656,
+    "lon": 13.064559,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/445970161",
+    "name": "Kleiner Spitzberg",
+    "ele": 1233,
+    "lat": 48.951009,
+    "lon": 13.479773,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2976643043",
+    "name": "Kleiner Hahnenbogen",
+    "ele": 1232,
+    "lat": 49.049898,
+    "lon": 13.356322,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/577336410",
+    "name": "Velký Kokrháč",
+    "ele": 1229,
+    "lat": 49.186137,
+    "lon": 13.145171,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2410851703",
+    "name": "Stallriegel",
+    "ele": 1228,
+    "lat": 49.108649,
+    "lon": 13.146849,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1149812832",
+    "name": "Hochzellberg",
+    "ele": 1208,
+    "lat": 49.07768,
+    "lon": 13.133208,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2365417233",
+    "name": "Farrenberg",
+    "ele": 1203,
+    "lat": 48.95769,
+    "lon": 13.541795,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1350030716",
+    "name": "Fahnenriegel",
+    "ele": 1199,
+    "lat": 49.052141,
+    "lon": 13.33727,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1278984529",
+    "name": "Hohlstein",
+    "ele": 1196,
+    "lat": 48.9151,
+    "lon": 13.530157,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1350032421",
+    "name": "Scheuereckberg",
+    "ele": 1193,
+    "lat": 49.0674,
+    "lon": 13.331138,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/173866922",
+    "name": "Kleiner Falkenstein",
+    "ele": 1190,
+    "lat": 49.088507,
+    "lon": 13.273242,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5434460328",
+    "name": "Huberriegel",
+    "ele": 1184,
+    "lat": 49.198256,
+    "lon": 13.121571,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/7452948346",
+    "name": "Hängender Riegel",
+    "ele": 1183,
+    "lat": 49.150437,
+    "lon": 13.056459,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5440873965",
+    "name": "Hindenburgfelsen",
+    "ele": 1173,
+    "lat": 49.141139,
+    "lon": 13.159555,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2969966047",
+    "name": "Malý Kokrháč",
+    "ele": 1169,
+    "lat": 49.190629,
+    "lon": 13.137136,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12290714769",
+    "name": "Schachtenhausriegel",
+    "ele": 1168,
+    "lat": 49.066858,
+    "lon": 13.356038,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/305665620",
+    "name": "Haidel",
+    "ele": 1166,
+    "lat": 48.818571,
+    "lon": 13.678244,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/576722561",
+    "name": "Nad Latschensee",
+    "ele": 1163,
+    "lat": 49.026389,
+    "lon": 13.404167,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1270510248",
+    "name": "Beerenkopf",
+    "ele": 1158,
+    "lat": 49.007447,
+    "lon": 13.402784,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/7452948345",
+    "name": "Ödriegel",
+    "ele": 1154,
+    "lat": 49.158656,
+    "lon": 13.024965,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12325406494",
+    "name": "Hochschachten",
+    "ele": 1153,
+    "lat": 49.0242,
+    "lon": 13.381251,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12176908455",
+    "name": "Zwengerlingsriegel",
+    "ele": 1152,
+    "lat": 49.145587,
+    "lon": 13.162233,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/445764708",
+    "name": "Waldhäuserriegel",
+    "ele": 1151,
+    "lat": 48.92468,
+    "lon": 13.484599,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996257321",
+    "name": "Sulzberg",
+    "ele": 1146,
+    "lat": 48.843573,
+    "lon": 13.699276,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3194358028",
+    "name": "Schwarzbachriegel",
+    "ele": 1145,
+    "lat": 49.078747,
+    "lon": 13.287624,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/417100704",
+    "name": "Almberg",
+    "ele": 1142,
+    "lat": 48.889185,
+    "lon": 13.643179,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2969872191",
+    "name": "Maxfelsen",
+    "ele": 1138,
+    "lat": 49.194702,
+    "lon": 13.132403,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12422308500",
+    "name": "Neuwelterriegel",
+    "ele": 1135,
+    "lat": 48.921555,
+    "lon": 13.534813,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1878093630",
+    "name": "Hochstein",
+    "ele": 1134,
+    "lat": 49.123694,
+    "lon": 13.064143,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5138366345",
+    "name": "Steinkopf",
+    "ele": 1134,
+    "lat": 48.957805,
+    "lon": 13.387765,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/96428401",
+    "name": "Großer Riedelstein",
+    "ele": 1132,
+    "lat": 49.1659,
+    "lon": 12.973,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2389014575",
+    "name": "Wagnerspitze",
+    "ele": 1125,
+    "lat": 49.137683,
+    "lon": 13.146609,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5503372191",
+    "name": "Čekání",
+    "ele": 1124,
+    "lat": 49.197046,
+    "lon": 13.129955,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12441319911",
+    "name": "Buchmühlkopf",
+    "ele": 1122,
+    "lat": 48.962244,
+    "lon": 13.589938,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/323839344",
+    "name": "Einödriegel",
+    "ele": 1121,
+    "lat": 48.928169,
+    "lon": 13.027674,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12860450885",
+    "name": "Sperrbühl",
+    "ele": 1115,
+    "lat": 48.867926,
+    "lon": 13.659253,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/323850384",
+    "name": "Breitenauriegel",
+    "ele": 1114,
+    "lat": 48.906548,
+    "lon": 13.030021,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12860450884",
+    "name": "Schwarzkopf",
+    "ele": 1111,
+    "lat": 48.875028,
+    "lon": 13.657453,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12472566810",
+    "name": "Duschlberg",
+    "ele": 1108,
+    "lat": 48.818917,
+    "lon": 13.690553,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12325406492",
+    "name": "Gugelhupf",
+    "ele": 1108,
+    "lat": 49.017242,
+    "lon": 13.381433,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996234032",
+    "name": "Hahnenriegel",
+    "ele": 1108,
+    "lat": 49.064917,
+    "lon": 13.163146,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12475515467",
+    "name": "Weberberg",
+    "ele": 1101,
+    "lat": 48.846333,
+    "lon": 13.717418,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996255522",
+    "name": "Alzenberg",
+    "ele": 1100,
+    "lat": 48.895165,
+    "lon": 13.626943,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/576647349",
+    "name": "Jägerhübel",
+    "ele": 1100,
+    "lat": 49.215779,
+    "lon": 13.114423,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12351040840",
+    "name": "Holzschuhriegel",
+    "ele": 1099,
+    "lat": 48.968146,
+    "lon": 13.369632,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/323839655",
+    "name": "Geißkopf",
+    "ele": 1097,
+    "lat": 48.924077,
+    "lon": 13.037423,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/295661960",
+    "name": "Hirschenstein",
+    "ele": 1095,
+    "lat": 48.964377,
+    "lon": 12.880009,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1891813231",
+    "name": "Weißer Riegel",
+    "ele": 1093,
+    "lat": 49.214729,
+    "lon": 13.114434,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12309332708",
+    "name": "Wiesfleckriegel",
+    "ele": 1093,
+    "lat": 49.030567,
+    "lon": 13.357766,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/323838844",
+    "name": "Dreitannenriegel",
+    "ele": 1092,
+    "lat": 48.897251,
+    "lon": 13.022115,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12472566811",
+    "name": "Kiesberg",
+    "ele": 1087,
+    "lat": 48.818224,
+    "lon": 13.697569,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/3637961577",
+    "name": "Hochstätter",
+    "ele": 1084,
+    "lat": 49.137475,
+    "lon": 13.089026,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/13072652723",
+    "name": "Sandberg",
+    "ele": 1082,
+    "lat": 48.951636,
+    "lon": 13.575701,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/403315504",
+    "name": "Mühlriegel",
+    "ele": 1079,
+    "lat": 49.156982,
+    "lon": 13.014905,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2482160659",
+    "name": "Schwarzriegel",
+    "ele": 1079,
+    "lat": 49.233989,
+    "lon": 12.934978,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/4316949760",
+    "name": "Bärenriegel",
+    "ele": 1078,
+    "lat": 49.137342,
+    "lon": 13.076229,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12469735004",
+    "name": "Schönberg",
+    "ele": 1074,
+    "lat": 48.850936,
+    "lon": 13.712182,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/290221627",
+    "name": "Eckstein",
+    "ele": 1073,
+    "lat": 49.237285,
+    "lon": 12.932966,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/576733426",
+    "name": "Strickberg",
+    "ele": 1068,
+    "lat": 48.930378,
+    "lon": 13.632829,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5092752013",
+    "name": "Luchsstein",
+    "ele": 1065,
+    "lat": 48.923557,
+    "lon": 13.500711,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996255524",
+    "name": "Schwarzkopf",
+    "ele": 1060,
+    "lat": 48.856324,
+    "lon": 13.654903,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2962212596",
+    "name": "Spitzberg",
+    "ele": 1058,
+    "lat": 49.130169,
+    "lon": 13.112054,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12290714776",
+    "name": "Hochplattel",
+    "ele": 1057,
+    "lat": 49.064335,
+    "lon": 13.320172,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/309432989",
+    "name": "Knogl",
+    "ele": 1056,
+    "lat": 48.995904,
+    "lon": 12.857168,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12475515466",
+    "name": "Großer Lichtenberg",
+    "ele": 1053,
+    "lat": 48.837125,
+    "lon": 13.718018,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1416318813",
+    "name": "Kälberbuckel",
+    "ele": 1053,
+    "lat": 48.97569,
+    "lon": 12.887782,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12860488966",
+    "name": "Steinkopf",
+    "ele": 1052,
+    "lat": 48.899727,
+    "lon": 13.63835,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/775651325",
+    "name": "Ahornriegel",
+    "ele": 1050,
+    "lat": 49.234882,
+    "lon": 12.944076,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2848573065",
+    "name": "Plattenriegel",
+    "ele": 1050,
+    "lat": 49.126843,
+    "lon": 13.045898,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/414734287",
+    "name": "Rauher Kulm",
+    "ele": 1050,
+    "lat": 48.948509,
+    "lon": 12.898845,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996234834",
+    "name": "Rote Höhe",
+    "ele": 1050,
+    "lat": 49.059865,
+    "lon": 13.178165,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12475515455",
+    "name": "Hackelberg",
+    "ele": 1049,
+    "lat": 48.801521,
+    "lon": 13.700573,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1407484391",
+    "name": "Klausenstein",
+    "ele": 1048,
+    "lat": 48.950337,
+    "lon": 12.896176,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/295668282",
+    "name": "Pröller",
+    "ele": 1048,
+    "lat": 49.021966,
+    "lon": 12.821145,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2388719374",
+    "name": "Haibühler Spitz",
+    "ele": 1047,
+    "lat": 49.163115,
+    "lon": 13.026586,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12448340010",
+    "name": "Reifenspitz",
+    "ele": 1044,
+    "lat": 48.941403,
+    "lon": 13.62118,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12458883371",
+    "name": "Brenntgupf",
+    "ele": 1043,
+    "lat": 48.780769,
+    "lon": 13.776147,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/538378363",
+    "name": "Eschenberg",
+    "ele": 1043,
+    "lat": 48.934238,
+    "lon": 13.279277,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/987564984",
+    "name": "Geißriegel",
+    "ele": 1043,
+    "lat": 48.90339,
+    "lon": 13.008174,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2452343798",
+    "name": "Kleiner Riedelstein",
+    "ele": 1042,
+    "lat": 49.161313,
+    "lon": 12.974748,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/173849656",
+    "name": "Rauchröhren",
+    "ele": 1042,
+    "lat": 49.170208,
+    "lon": 12.960519,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996252971",
+    "name": "Rollmannsberg",
+    "ele": 1042,
+    "lat": 48.795835,
+    "lon": 13.800833,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12461732131",
+    "name": "Spitzenberg",
+    "ele": 1042,
+    "lat": 48.799323,
+    "lon": 13.784838,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996241294",
+    "name": "Hirschberg",
+    "ele": 1039,
+    "lat": 49.021588,
+    "lon": 13.35536,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12461732135",
+    "name": "Steinberg",
+    "ele": 1038,
+    "lat": 48.806394,
+    "lon": 13.797342,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/4248130320",
+    "name": "Kopfriegel",
+    "ele": 1036,
+    "lat": 49.109989,
+    "lon": 13.159905,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12469729821",
+    "name": "Steinberg",
+    "ele": 1035,
+    "lat": 48.87029,
+    "lon": 13.67727,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/173849666",
+    "name": "Mittagstein",
+    "ele": 1034,
+    "lat": 49.173235,
+    "lon": 12.942283,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12860450883",
+    "name": "Spitzigstein",
+    "ele": 1034,
+    "lat": 48.879834,
+    "lon": 13.647147,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12416121573",
+    "name": "Streuberg",
+    "ele": 1034,
+    "lat": 48.948922,
+    "lon": 13.586665,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2996257320",
+    "name": "Lichtenberg",
+    "ele": 1028,
+    "lat": 48.839456,
+    "lon": 13.739017,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12473729002",
+    "name": "Eibenberg",
+    "ele": 1025,
+    "lat": 48.835896,
+    "lon": 13.740388,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1491248965",
+    "name": "Hochberg",
+    "ele": 1025,
+    "lat": 49.000426,
+    "lon": 12.855609,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/295667592",
+    "name": "Predigtstuhl",
+    "ele": 1024,
+    "lat": 49.00234,
+    "lon": 12.848807,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/1272507425",
+    "name": "Vogelsang",
+    "ele": 1022,
+    "lat": 48.934392,
+    "lon": 12.943565,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/270092058",
+    "name": "Špičák",
+    "ele": 1021,
+    "lat": 48.807637,
+    "lon": 13.803722,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/5114561790",
+    "name": "Geißberg",
+    "ele": 1018,
+    "lat": 48.912214,
+    "lon": 13.642052,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/290221610",
+    "name": "Bärenriegel",
+    "ele": 1017,
+    "lat": 49.240128,
+    "lon": 12.926433,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12351040839",
+    "name": "Hinterer Riegel",
+    "ele": 1017,
+    "lat": 48.964808,
+    "lon": 13.364053,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/2388746485",
+    "name": "Hörndl",
+    "ele": 1015,
+    "lat": 49.142019,
+    "lon": 13.08973,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/4290014350",
+    "name": "Schneiderberg",
+    "ele": 1015,
+    "lat": 49.141771,
+    "lon": 13.100242,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/12469772371",
+    "name": "Steinriegel",
+    "ele": 1015,
+    "lat": 48.856816,
+    "lon": 13.702129,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/605503339",
+    "name": "Steinberg",
+    "ele": 1011,
+    "lat": 48.8873,
+    "lon": 13.531085,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/459569899",
+    "name": "Brotjacklriegel",
+    "ele": 1010,
+    "lat": 48.817016,
+    "lon": 13.216734,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/13339142247",
+    "name": "Grandelberg",
+    "ele": 1010,
+    "lat": 48.869418,
+    "lon": 13.644307,
+    "region": "bayerwald-de"
+  },
+  {
+    "id": "osm:node/9196153697",
+    "name": "Steinberg",
+    "ele": 1000,
+    "lat": 48.911498,
+    "lon": 13.00033,
+    "region": "bayerwald-de"
+  }
+]

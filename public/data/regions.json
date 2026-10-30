@@ -1,0 +1,8 @@
+[
+  {
+    "id": "bayerwald-de",
+    "name": "Bayerischer Wald",
+    "file": "regions/bayerwald-de.json",
+    "minEle": 1000
+  }
+]

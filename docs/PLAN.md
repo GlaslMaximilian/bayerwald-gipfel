@@ -84,7 +84,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M6 – PWA & Offline
+### [x] M6 – PWA & Offline
 **Ziel:** Installierbar und offline nutzbar.
 - Manifest (Name, Icons, Theme-Farbe), installierbar auf Android
 - Service Worker: App-Shell und `public/data/**` vorab cachen
@@ -181,3 +181,10 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - `AscentRepository.importAscents()` übernimmt Besteigungen mit Original-`id`/`createdAt` in einem Schritt (später auch für Firestore).
 - Oberfläche: Zahnrad oben rechts neben dem Stil-Umschalter öffnet einen nativen `<dialog>` „Einstellungen“ mit Abschnitt „Datensicherung“. jsdom kennt `showModal` nicht → kleiner Ersatz in `test-setup.ts`.
 - E2E: Abhaken → Export → localStorage leeren → Import → Fortschritt und Notiz wieder da; zweiter Import zeigt „0 neu, 1 schon vorhanden“. Zeitlimit pro E2E-Test auf 90 s erhöht, weil die Karte bei ausgelastetem Rechner deutlich langsamer lädt.
+
+### 2026-10-31 – M6 PWA & Offline ✔
+- `vite-plugin-pwa` 2.0 (unterstützt Vite 8) + `workbox-window`. `npm audit` meldet 4 Warnungen niedriger Stufe (`deepmerge` in `workbox-build`), betrifft nur den Build, nicht die App.
+- Manifest: „Bayerwald-Gipfel“ / „BW-Gipfel“, `standalone`, Theme #2f7d5b, `start_url`/`scope` = `/bayerwald-gipfel/`. Icon (Berg mit Häkchen) als Quelle in `assets/icon.svg`; `node scripts/make-icons.ts` erzeugt per Playwright `favicon.svg`, 192/512, maskable 512 und Apple-Touch-Icon (liegen im Repo).
+- Service Worker (`registerType: 'prompt'`): Precache von App-Shell, MapLibre-Worker und `data/**/*.json`. Runtime-Cache für MapTiler: Kacheln CacheFirst (`maptiler-tiles` 3000, `maptiler-satellite` 1500 Einträge, 60 Tage), Stil/Schriften/Sprites StaleWhileRevalidate. Im Dev-Server ist der Service Worker aus.
+- Hinweise oben mittig (am Desktop über dem Kartenbereich): „Offline – nur bereits angesehene Kartenbereiche“ und „Neue Version verfügbar“ mit „Aktualisieren“/„Später“. Ladefehler erscheinen dort jetzt auch. In Vitest ersetzt `src/pwa/registerStub.ts` das virtuelle Modul.
+- Lighthouse hat seit Version 12 keine PWA-Kategorie mehr. Stattdessen prüft `e2e/offline.spec.ts`: Manifest + Icons gültig, Service Worker steuert die Seite; Flugmodus (Playwright `setOffline`): App startet, 129 Gipfel, Abhaken, Kacheln am Arber sichtbar, Gegenprobe Passau bleibt leer. Update-Hinweis einmal von Hand gegen den Preview-Build geprüft (geänderte `sw.js` → Hinweis → Aktualisieren lädt neu).

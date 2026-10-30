@@ -3,10 +3,11 @@ import {
   NavigationControl,
   setWorkerUrl,
   type LngLatBoundsLike,
+  type LngLatLike,
 } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
-import { useEffect, useRef } from 'react';
+import { useEffect, useImperativeHandle, useRef, type Ref } from 'react';
 import type { Peak } from '../data/types';
 import { adjustBaseStyle } from './baseStyle';
 import {
@@ -29,6 +30,45 @@ const START_BOUNDS: LngLatBoundsLike = [
 ];
 /** Fingerbreite Toleranz beim Antippen eines Gipfels (Pixel). */
 const HIT_TOLERANCE_PX = 14;
+/** Zoomstufe beim Springen aus der Liste. */
+const FOCUS_ZOOM = 13;
+/** Desktop: Breite der Seitenleiste inkl. Rand. */
+const SIDEBAR_PX = 384;
+/** Mobil: Höhe von Pille und Stil-Umschalter oben. */
+const TOP_BAR_PX = 64;
+/** Mobil: Anteil der Höhe, den das Bottom Sheet ungefähr verdeckt. */
+const SHEET_SHARE = 0.45;
+/** Abstand zum Rand des sichtbaren Bereichs, bevor die Karte verschoben wird. */
+const REVEAL_MARGIN_PX = 24;
+
+export type MapViewHandle = {
+  /** Fliegt zum Gipfel, so dass ihn Seitenleiste bzw. Bottom Sheet nicht verdecken. */
+  flyToPeak: (peak: Peak) => void;
+};
+
+/** Bereich der Karte, den Seitenleiste bzw. Bottom Sheet frei lassen. */
+function visibleArea(map: MapLibreMap, isDesktop: boolean) {
+  const { clientWidth: width, clientHeight: height } = map.getContainer();
+  const area = isDesktop
+    ? { left: SIDEBAR_PX, top: 0, right: width, bottom: height }
+    : { left: 0, top: TOP_BAR_PX, right: width, bottom: height * (1 - SHEET_SHARE) };
+  // Versatz der Mitte des freien Bereichs gegenüber der Kartenmitte.
+  const offset: [number, number] = [
+    (area.left + area.right - width) / 2,
+    (area.top + area.bottom - height) / 2,
+  ];
+  return { ...area, offset };
+}
+
+/** Verschiebt die Karte nur, wenn der Gipfel sonst verdeckt wäre. */
+function revealPoint(map: MapLibreMap, lngLat: LngLatLike, isDesktop: boolean) {
+  const area = visibleArea(map, isDesktop);
+  const { x, y } = map.project(lngLat);
+  const m = REVEAL_MARGIN_PX;
+  const visible =
+    x >= area.left + m && x <= area.right - m && y >= area.top + m && y <= area.bottom - m;
+  if (!visible) map.easeTo({ center: lngLat, offset: area.offset });
+}
 
 type Props = {
   apiKey: string;
@@ -37,6 +77,9 @@ type Props = {
   ascentCounts: AscentCounts;
   selectedId: string | null;
   onSelect: (peakId: string | null) => void;
+  /** Seitenleiste links (Desktop) oder Bottom Sheet (mobil). */
+  isDesktop: boolean;
+  ref?: Ref<MapViewHandle>;
 };
 
 declare global {
@@ -53,14 +96,32 @@ export default function MapView({
   ascentCounts,
   selectedId,
   onSelect,
+  isDesktop,
+  ref,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   // Aktuelle Werte für Event-Handler, die nur einmal registriert werden.
-  const latest = useRef({ peaks, ascentCounts, selectedId, onSelect });
+  const latest = useRef({ peaks, ascentCounts, selectedId, onSelect, isDesktop });
   useEffect(() => {
-    latest.current = { peaks, ascentCounts, selectedId, onSelect };
+    latest.current = { peaks, ascentCounts, selectedId, onSelect, isDesktop };
   });
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      flyToPeak(peak) {
+        const map = mapRef.current;
+        if (!map) return;
+        map.flyTo({
+          center: [peak.lon, peak.lat],
+          zoom: Math.max(map.getZoom(), FOCUS_ZOOM),
+          offset: visibleArea(map, latest.current.isDesktop).offset,
+        });
+      },
+    }),
+    [],
+  );
 
   // Karte einmalig anlegen.
   useEffect(() => {
@@ -68,6 +129,9 @@ export default function MapView({
       container: containerRef.current!,
       style: styleUrl(styleId, apiKey),
       bounds: START_BOUNDS,
+      fitBoundsOptions: {
+        padding: isDesktop ? { left: SIDEBAR_PX, top: 0, right: 0, bottom: 0 } : 0,
+      },
       attributionControl: { compact: true },
       dragRotate: false,
       pitchWithRotate: false,
@@ -95,17 +159,18 @@ export default function MapView({
           )
         : [];
       // Bei dicht liegenden Gipfeln den nächstgelegenen nehmen, nicht den obersten.
-      let nearest: { id: string; distance: number } | null = null;
+      let nearest: { id: string; lngLat: [number, number]; distance: number } | null = null;
       for (const feature of features) {
         if (feature.geometry.type !== 'Point') continue;
         const [lon, lat] = feature.geometry.coordinates as [number, number];
         const p = map.project([lon, lat]);
         const distance = Math.hypot(p.x - x, p.y - y);
         if (!nearest || distance < nearest.distance) {
-          nearest = { id: feature.properties.id as string, distance };
+          nearest = { id: feature.properties.id as string, lngLat: [lon, lat], distance };
         }
       }
       latest.current.onSelect(nearest?.id ?? null);
+      if (nearest) revealPoint(map, nearest.lngLat, latest.current.isDesktop);
     });
 
     map.on('mousemove', (e) => {

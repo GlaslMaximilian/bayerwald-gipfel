@@ -4,6 +4,7 @@ import { ascentCountLabel } from '../domain/ascents';
 import AscentForm from './AscentForm';
 import AscentList from './AscentList';
 import classes from './PeakPanel.module.css';
+import PeakStatusIcon from './PeakStatusIcon';
 
 type Props = {
   peak: Peak;
@@ -13,6 +14,8 @@ type Props = {
   onAddAscent: (date: string, note: string) => Promise<void>;
   onRemoveAscent: (id: string) => Promise<void>;
   onClose: () => void;
+  /** Am Desktop führt Schließen zurück zur Liste. */
+  closeAs?: 'close' | 'back';
 };
 
 /** Details zu einem Gipfel: mobil als Bottom Sheet, am Desktop als Seitenpanel links. */
@@ -23,6 +26,7 @@ export default function PeakPanel({
   onAddAscent,
   onRemoveAscent,
   onClose,
+  closeAs = 'close',
 }: Props) {
   const [formOpen, setFormOpen] = useState(false);
   const climbed = ascents.length > 0;
@@ -48,24 +52,20 @@ export default function PeakPanel({
             {regionName && <span> · {regionName}</span>}
           </p>
         </div>
-        <button type="button" className={classes.close} onClick={onClose} aria-label="Schließen">
+        <button
+          type="button"
+          className={classes.close}
+          onClick={onClose}
+          aria-label={closeAs === 'back' ? 'Zurück zur Liste' : 'Schließen'}
+        >
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" />
+            <path d={closeAs === 'back' ? 'M15 5l-7 7 7 7' : 'M6 6l12 12M18 6 6 18'} />
           </svg>
         </button>
       </header>
 
       <p className={climbed ? classes.statusClimbed : classes.status} data-testid="ascent-status">
-        {climbed ? (
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" />
-            <path d="m7.5 12.5 3 3 6-6.5" />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="8.5" />
-          </svg>
-        )}
+        <PeakStatusIcon climbed={climbed} />
         {ascentCountLabel(ascents.length)}
       </p>
 

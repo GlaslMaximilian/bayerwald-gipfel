@@ -49,6 +49,12 @@ describe('PeakPanel', () => {
     expect(onClose).toHaveBeenCalledTimes(2);
   });
 
+  it('heißt am Desktop „Zurück zur Liste“', () => {
+    const { onClose } = renderPanel({ closeAs: 'back' });
+    fireEvent.click(screen.getByRole('button', { name: 'Zurück zur Liste' }));
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
   it('hakt mit heutigem Datum und Notiz ab', async () => {
     const { onAddAscent } = renderPanel();
     fireEvent.click(screen.getByRole('button', { name: 'Bestiegen' }));

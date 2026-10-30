@@ -89,9 +89,9 @@
   .panel {
     top: 12px;
     right: auto;
-    bottom: auto;
+    bottom: 12px;
     left: 12px;
-    width: 340px;
+    width: 360px;
     padding: 20px;
     border-radius: 12px;
     animation-name: fade-in;

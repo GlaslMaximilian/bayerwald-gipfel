@@ -1,13 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LocalAscentRepository } from './data/ascents/LocalAscentRepository';
 import { useAscents } from './data/ascents/useAscents';
 import { loadPeaks } from './data/peaks';
 import type { Peak, Region } from './data/types';
-import MapView from './map/MapView';
+import MapView, { type MapViewHandle } from './map/MapView';
 import StyleSwitch from './map/StyleSwitch';
 import { loadStyleChoice, saveStyleChoice, type MapStyleId } from './map/styles';
 import { ascentsOfPeak, countByPeak } from './domain/ascents';
+import { peakListEntries, progress, type ListFilter, type ListSort } from './domain/peakList';
+import PeakList from './ui/PeakList';
 import PeakPanel from './ui/PeakPanel';
+import ProgressPill from './ui/ProgressPill';
+import { DESKTOP_QUERY, useMediaQuery } from './ui/useMediaQuery';
 
 const ascentRepository = new LocalAscentRepository();
 
@@ -20,6 +24,17 @@ export default function App() {
   const [styleId, setStyleId] = useState<MapStyleId>(loadStyleChoice);
   const ascents = useAscents(ascentRepository);
   const ascentCounts = useMemo(() => countByPeak(ascents), [ascents]);
+  const isDesktop = useMediaQuery(DESKTOP_QUERY);
+  const mapRef = useRef<MapViewHandle>(null);
+  // Mobil: Liste als Bottom Sheet geöffnet. Am Desktop ist die Liste immer da.
+  const [listOpen, setListOpen] = useState(false);
+  const [filter, setFilter] = useState<ListFilter>('all');
+  const [sort, setSort] = useState<ListSort>('ele');
+  const entries = useMemo(
+    () => peakListEntries(peaks, ascents, filter, sort),
+    [peaks, ascents, filter, sort],
+  );
+  const { climbed, total } = useMemo(() => progress(peaks, ascents), [peaks, ascents]);
 
   useEffect(() => {
     loadPeaks()
@@ -38,6 +53,18 @@ export default function App() {
     saveStyleChoice(id);
   };
   const closePanel = useCallback(() => setSelectedId(null), []);
+  const closeList = useCallback(() => setListOpen(false), []);
+  const selectOnMap = (peakId: string | null) => {
+    setListOpen(false);
+    setSelectedId(peakId);
+  };
+  const selectFromList = (peakId: string) => {
+    const peak = peaks.find((p) => p.id === peakId);
+    if (!peak) return;
+    setListOpen(false);
+    setSelectedId(peakId);
+    mapRef.current?.flyToPeak(peak);
+  };
   const addAscent = async (peakId: string, date: string, note: string) => {
     await ascentRepository.add({ peakId, date, note });
   };
@@ -66,9 +93,29 @@ export default function App() {
         peaks={peaks}
         ascentCounts={ascentCounts}
         selectedId={selectedId}
-        onSelect={setSelectedId}
+        onSelect={selectOnMap}
+        isDesktop={isDesktop}
+        ref={mapRef}
       />
       <StyleSwitch value={styleId} onChange={changeStyle} />
+      {!isDesktop && (
+        <ProgressPill climbed={climbed} total={total} onClick={() => setListOpen(true)} />
+      )}
+      {(isDesktop || listOpen) && (
+        <PeakList
+          entries={entries}
+          climbed={climbed}
+          total={total}
+          filter={filter}
+          sort={sort}
+          onFilterChange={setFilter}
+          onSortChange={setSort}
+          onSelect={selectFromList}
+          onClose={isDesktop ? undefined : closeList}
+          // Am Desktop bleibt die Liste hinter den Details erhalten (Scrollposition).
+          hidden={!!selectedPeak}
+        />
+      )}
       {loadError && (
         <p className="toast" role="alert">
           {loadError}
@@ -83,6 +130,7 @@ export default function App() {
           onAddAscent={(date, note) => addAscent(selectedPeak.id, date, note)}
           onRemoveAscent={removeAscent}
           onClose={closePanel}
+          closeAs={isDesktop ? 'back' : 'close'}
         />
       )}
     </main>

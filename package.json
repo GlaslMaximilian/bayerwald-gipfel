@@ -15,6 +15,7 @@
     "fetch-peaks": "node scripts/fetch-peaks.ts"
   },
   "dependencies": {
+    "maplibre-gl": "^6.16.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

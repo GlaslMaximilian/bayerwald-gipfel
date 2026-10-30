@@ -1,0 +1,20 @@
+node_modules
+dist
+*.local
+.env
+.env.*
+!.env.example
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache
+e2e/screenshots
+
+# Editor/OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db

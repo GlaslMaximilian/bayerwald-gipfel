@@ -55,6 +55,16 @@ body {
   height: 100%;
 }
 
+/* Knöpfe oben rechts: Kartenstil und Einstellungen */
+.toolbar {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+
 .notice {
   display: grid;
   place-content: center;

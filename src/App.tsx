@@ -11,6 +11,8 @@ import { peakListEntries, progress, type ListFilter, type ListSort } from './dom
 import PeakList from './ui/PeakList';
 import PeakPanel from './ui/PeakPanel';
 import ProgressPill from './ui/ProgressPill';
+import SettingsButton from './ui/SettingsButton';
+import SettingsDialog from './ui/SettingsDialog';
 import { DESKTOP_QUERY, useMediaQuery } from './ui/useMediaQuery';
 
 const ascentRepository = new LocalAscentRepository();
@@ -28,6 +30,7 @@ export default function App() {
   const mapRef = useRef<MapViewHandle>(null);
   // Mobil: Liste als Bottom Sheet geöffnet. Am Desktop ist die Liste immer da.
   const [listOpen, setListOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [filter, setFilter] = useState<ListFilter>('all');
   const [sort, setSort] = useState<ListSort>('ele');
   const entries = useMemo(
@@ -54,6 +57,7 @@ export default function App() {
   };
   const closePanel = useCallback(() => setSelectedId(null), []);
   const closeList = useCallback(() => setListOpen(false), []);
+  const closeSettings = useCallback(() => setSettingsOpen(false), []);
   const selectOnMap = (peakId: string | null) => {
     setListOpen(false);
     setSelectedId(peakId);
@@ -97,7 +101,16 @@ export default function App() {
         isDesktop={isDesktop}
         ref={mapRef}
       />
-      <StyleSwitch value={styleId} onChange={changeStyle} />
+      <div className="toolbar">
+        <StyleSwitch value={styleId} onChange={changeStyle} />
+        <SettingsButton onClick={() => setSettingsOpen(true)} />
+      </div>
+      <SettingsDialog
+        open={settingsOpen}
+        onClose={closeSettings}
+        ascents={ascents}
+        onImport={(imported) => ascentRepository.importAscents(imported)}
+      />
       {!isDesktop && (
         <ProgressPill climbed={climbed} total={total} onClick={() => setListOpen(true)} />
       )}

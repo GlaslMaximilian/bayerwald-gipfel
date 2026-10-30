@@ -11,6 +11,15 @@ window.matchMedia ??= (query: string) =>
     removeEventListener: () => {},
   }) as unknown as MediaQueryList;
 
+// jsdom kennt <dialog> nur ohne showModal/close.
+HTMLDialogElement.prototype.showModal ??= function (this: HTMLDialogElement) {
+  this.open = true;
+};
+HTMLDialogElement.prototype.close ??= function (this: HTMLDialogElement) {
+  this.open = false;
+  this.dispatchEvent(new Event('close'));
+};
+
 // Ohne Vitest-„globals“ räumt Testing Library nicht selbst auf.
 afterEach(() => {
   cleanup();

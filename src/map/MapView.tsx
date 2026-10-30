@@ -9,7 +9,13 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { useEffect, useRef } from 'react';
 import type { Peak } from '../data/types';
 import { adjustBaseStyle } from './baseStyle';
-import { addPeakLayers, PEAK_LAYER_IDS, setSelectedPeak, updatePeakData } from './peakLayers';
+import {
+  addPeakLayers,
+  PEAK_LAYER_IDS,
+  setSelectedPeak,
+  updatePeakData,
+  type AscentCounts,
+} from './peakLayers';
 import { styleUrl, type MapStyleId } from './styles';
 import classes from './MapView.module.css';
 
@@ -28,6 +34,7 @@ type Props = {
   apiKey: string;
   styleId: MapStyleId;
   peaks: Peak[];
+  ascentCounts: AscentCounts;
   selectedId: string | null;
   onSelect: (peakId: string | null) => void;
 };
@@ -39,13 +46,20 @@ declare global {
   }
 }
 
-export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }: Props) {
+export default function MapView({
+  apiKey,
+  styleId,
+  peaks,
+  ascentCounts,
+  selectedId,
+  onSelect,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   // Aktuelle Werte für Event-Handler, die nur einmal registriert werden.
-  const latest = useRef({ peaks, selectedId, onSelect });
+  const latest = useRef({ peaks, ascentCounts, selectedId, onSelect });
   useEffect(() => {
-    latest.current = { peaks, selectedId, onSelect };
+    latest.current = { peaks, ascentCounts, selectedId, onSelect };
   });
 
   // Karte einmalig anlegen.
@@ -64,19 +78,20 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
 
     map.on('style.load', () => {
       adjustBaseStyle(map);
-      addPeakLayers(map, latest.current.peaks, latest.current.selectedId);
+      const { peaks, ascentCounts, selectedId } = latest.current;
+      addPeakLayers(map, peaks, ascentCounts, selectedId);
     });
 
     map.on('click', (e) => {
       const { x, y } = e.point;
       const t = HIT_TOLERANCE_PX;
-      const features = map.getLayer(PEAK_LAYER_IDS.circle)
+      const features = map.getLayer(PEAK_LAYER_IDS.marker)
         ? map.queryRenderedFeatures(
             [
               [x - t, y - t],
               [x + t, y + t],
             ],
-            { layers: [PEAK_LAYER_IDS.circle] },
+            { layers: [PEAK_LAYER_IDS.marker] },
           )
         : [];
       // Bei dicht liegenden Gipfeln den nächstgelegenen nehmen, nicht den obersten.
@@ -95,8 +110,8 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
 
     map.on('mousemove', (e) => {
       const hit =
-        map.getLayer(PEAK_LAYER_IDS.circle) &&
-        map.queryRenderedFeatures(e.point, { layers: [PEAK_LAYER_IDS.circle] }).length > 0;
+        map.getLayer(PEAK_LAYER_IDS.marker) &&
+        map.queryRenderedFeatures(e.point, { layers: [PEAK_LAYER_IDS.marker] }).length > 0;
       map.getCanvas().style.cursor = hit ? 'pointer' : '';
     });
 
@@ -120,11 +135,11 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
     map.setStyle(styleUrl(styleId, apiKey));
   }, [styleId, apiKey]);
 
-  // Gipfeldaten nachführen.
+  // Gipfeldaten und Besteigungen nachführen (Marker ändern sich sofort).
   useEffect(() => {
     const map = mapRef.current;
-    if (map) updatePeakData(map, peaks);
-  }, [peaks]);
+    if (map) updatePeakData(map, peaks, ascentCounts);
+  }, [peaks, ascentCounts]);
 
   // Auswahl hervorheben.
   useEffect(() => {

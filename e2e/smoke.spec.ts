@@ -10,8 +10,8 @@ async function waitForPeaks(page: Page) {
       return (
         !!map &&
         map.isStyleLoaded() &&
-        !!map.getLayer('peaks-circle') &&
-        map.queryRenderedFeatures({ layers: ['peaks-circle'] }).length > 0
+        !!map.getLayer('peaks-marker') &&
+        map.queryRenderedFeatures({ layers: ['peaks-marker'] }).length > 0
       );
     },
     undefined,
@@ -47,7 +47,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     await waitForPeaks(page);
 
     const count = await page.evaluate(
-      () => window.__map!.queryRenderedFeatures({ layers: ['peaks-circle'] }).length,
+      () => window.__map!.queryRenderedFeatures({ layers: ['peaks-marker'] }).length,
     );
     expect(count).toBeGreaterThan(100);
     await screenshot(page, `karte-${colorScheme}`, testInfo.project.name);

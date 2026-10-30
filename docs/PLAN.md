@@ -50,7 +50,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M3 – Besteigungen (lokal)
+### [x] M3 – Besteigungen (lokal)
 **Ziel:** Gipfel abhaken, vorerst nur lokal gespeichert.
 - `AscentRepository`-Interface (`list`, `add`, `remove`, `subscribe`), erste Implementierung `LocalAscentRepository` (IndexedDB oder localStorage)
 - Detail-Panel: Button „Bestiegen“ → Datum (Standard: heute) + optionale Notiz
@@ -157,3 +157,11 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - Detail-Panel: < 768 px Bottom Sheet, sonst Seitenpanel links; schließen per ×, Escape oder Tippen auf leere Karte. Zoom-Knöpfe mobil ausgeblendet.
 - Ohne `VITE_MAPTILER_KEY` zeigt die App einen Hinweis. Schlüssel liegt in `.env` und als GitHub-Secret; im MapTiler-Dashboard auf `glaslmaximilian.github.io` und `localhost` beschränkt (geprüft: ohne Origin 403).
 - Playwright baut mit `--mode e2e`; nur dann hängt die Karte an `window.__map`. 2 Worker, Wartebedingung „Stil geladen + Gipfel gerendert“. Dabei gefunden und behoben: Beim Start mit Satellit blieb die Gipfel-Quelle leer.
+
+### 2026-10-30 – M3 Besteigungen (lokal) ✔
+- `AscentRepository` (async: `list`, `add`, `remove`, `subscribe`) + `LocalAscentRepository` auf localStorage, Schlüssel `bayerwald-gipfel.ascents.v1`. Änderungen aus anderen Tabs kommen über das `storage`-Ereignis. Beschädigte Daten werden ignoriert statt abzustürzen.
+- Domain (`src/domain/ascents.ts`): Zählen pro Gipfel, Besteigungen eines Gipfels (neueste zuerst), heutiges Datum in Ortszeit, Datumsprüfung (gültig, nicht in der Zukunft), deutsches Datumsformat.
+- Detail-Panel: Status „Noch nicht bestiegen“ / „3× bestiegen“, Knopf „Bestiegen“ bzw. „Erneut bestiegen“ → Datum (Standard heute) + Notiz. Liste neueste zuerst; Löschen mit Bestätigung direkt im Eintrag (kein Browser-Dialog).
+- Marker (Canvas-Icons): offen = dunkelgrauer Ring, bestiegen = grüner Kreis mit Häkchen, größer und obenauf. Anzahl nur im Panel. Marker aktualisieren sich sofort über `count` im GeoJSON.
+- E2E: Abhaken → Marker ändert sich → Neuladen → zweite Besteigung → Löschen, mobil und Desktop.
+- Beobachtung (nicht im Plan): Mobil kann das Bottom Sheet den gewählten Gipfel verdecken. Ggf. in M4 beim „Liste → Karte fliegt zum Gipfel“ mit Padding lösen.

@@ -20,7 +20,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M1 – Gipfeldaten
+### [x] M1 – Gipfeldaten
 **Ziel:** Geprüfte Gipfelliste als Regionspaket.
 - `scripts/fetch-peaks.ts`: Overpass-Abfrage `natural=peak` mit `name` und `ele` innerhalb der Landkreise Cham, Regen, Freyung-Grafenau, Deggendorf, Straubing-Bogen und Passau (deutsche Seite)
 - `ele` robust parsen (z. B. `"1456"`, `"1456 m"`, `"1.456"`, `"1456,2"`), Werte < 1000 verwerfen
@@ -140,3 +140,11 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - Repo: https://github.com/GlaslMaximilian/bayerwald-gipfel (public, wegen Pages im Free-Plan). Live: https://glaslmaximilian.github.io/bayerwald-gipfel/
 - GitHub CLI (`gh`) lokal per winget installiert und angemeldet.
 - Offen: `ubuntu-latest` wechselt auf Ubuntu 26, beobachten.
+
+### 2026-10-30 – M1 Gipfeldaten ✔
+- `npm run fetch-peaks` (Node 24 führt TypeScript direkt aus, keine neue Abhängigkeit). Eine Overpass-Abfrage: Grenzlinien der 6 Landkreise, Gipfel je Landkreis, Gipfel bis 1 km um die Grenze. Abstand zur Grenze wird lokal berechnet (≤ 200 m → aufgenommen und markiert, bis 1 km → im Review „nicht aufgenommen“).
+- Reine Logik in `scripts/peaks/` mit Vitest-Tests: `ele.ts` („1.456“ gilt als Tausenderpunkt), `geo.ts`, `dedupe.ts` (gleicher Name, < 300 m), `overrides.ts`; `review.ts` erzeugt `docs/peaks-review.md`. Das Review zeigt zusätzlich abweichendes `name:de`.
+- Overpass ist oft überlastet (502): Skript versucht 3× mit wachsender Pause, Ersatzserver `overpass.private.coffee`. Der Ersatzserver hatte einmal einen älteren Datenstand (Almberg 1139 statt 1142 m) – bei Abweichungen erneut über den Hauptserver abrufen.
+- Review-Entscheidungen (in `scripts/peaks-overrides.json`): alle tschechischen Grenzgipfel raus, ebenso die tschechisch benannten V koutě und Malý Kokrháč. Bayerischer Plöckenstein (4 m jenseits der Grenze) bleibt, Hufberg/Plöckenstein-Hauptgipfel (CZ) nicht aufgenommen. Dreisessel und Hochstein bleiben beide.
+- Ergebnis: **129 Gipfel** ab 1000 m, freigegeben.
+- Bekannte Grenze: Gipfel ohne `ele`-Tag in OSM werden nicht erfasst; fehlende Gipfel ggf. per `include` mit `ele` nachtragen.

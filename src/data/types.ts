@@ -15,3 +15,15 @@ export type Region = {
   file: string;
   minEle: number;
 };
+
+/** Eine Besteigung (Nutzerdaten). Ein Gipfel gilt als bestiegen, sobald er mindestens eine hat. */
+export type Ascent = {
+  id: string;
+  peakId: string;
+  /** "YYYY-MM-DD" */
+  date: string;
+  note?: string;
+  stravaActivityId?: string;
+  /** ISO-Zeitstempel */
+  createdAt: string;
+};

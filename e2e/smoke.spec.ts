@@ -82,13 +82,13 @@ test('Tippen auf einen Gipfel öffnet das Detail-Panel', async ({ page }, testIn
   await waitForPeaks(page);
   await clickArber(page);
 
-  const panel = page.getByRole('complementary');
+  const panel = page.getByRole('complementary', { name: ARBER.name });
   await expect(panel.getByRole('heading', { name: ARBER.name })).toBeVisible();
   await expect(panel.getByText('1.456 m')).toBeVisible();
   await page.waitForTimeout(300); // Einblend-Animation
   await screenshot(page, 'panel', testInfo.project.name);
 
-  await panel.getByRole('button', { name: 'Schließen' }).click();
+  await panel.getByRole('button', { name: /^(Schließen|Zurück zur Liste)$/ }).click();
   await expect(panel).toBeHidden();
 });
 
@@ -123,7 +123,7 @@ test('Abhaken, Mehrfachbesteigung und Löschen bleiben nach dem Neuladen erhalte
   await waitForPeaks(page);
   await clickArber(page);
 
-  const panel = page.getByRole('complementary');
+  const panel = page.getByRole('complementary', { name: ARBER.name });
   const status = panel.getByTestId('ascent-status');
   await expect(status).toHaveText('Noch nicht bestiegen');
   expect(await arberMarkerCount(page)).toBe(0);
@@ -163,4 +163,72 @@ test('Abhaken, Mehrfachbesteigung und Löschen bleiben nach dem Neuladen erhalte
   await expect(status).toHaveText('1× bestiegen');
   await expect(panel.getByRole('listitem')).toHaveCount(1);
   await expect.poll(() => arberMarkerCount(page)).toBe(1);
+});
+
+/** Öffnet mobil die Liste über die Pille; am Desktop ist sie immer sichtbar. */
+async function openList(page: Page) {
+  const list = page.getByRole('complementary', { name: 'Gipfelliste' });
+  const pill = page.getByRole('button', { name: /^Gipfelliste öffnen/ });
+  if (await pill.isVisible()) await pill.click();
+  await expect(list).toBeVisible();
+  return list;
+}
+
+/** Namen der Listeneinträge in Anzeigereihenfolge. */
+function entryNames(list: ReturnType<Page['getByRole']>) {
+  return list
+    .getByRole('listitem')
+    .evaluateAll((items) =>
+      items.map((li) => li.querySelector('button > span > span')?.textContent ?? ''),
+    );
+}
+
+test('Liste: Fortschritt, Sortierung, Filter und Sprung zur Karte', async ({ page }, testInfo) => {
+  await page.goto('./');
+  await waitForPeaks(page);
+
+  let list = await openList(page);
+  await expect(list.getByTestId('progress')).toHaveText('0 / 129 Gipfel');
+  await expect(list.getByRole('listitem')).toHaveCount(129);
+  expect((await entryNames(list))[0]).toBe(ARBER.name);
+  await page.waitForTimeout(300); // Einblend-Animation
+  await screenshot(page, 'liste', testInfo.project.name);
+
+  // Sortierung nach Name
+  await list.getByLabel('Sortieren nach').selectOption('name');
+  const names = await entryNames(list);
+  expect(names).toEqual([...names].sort(new Intl.Collator('de').compare));
+
+  // Tippen auf einen Eintrag: Karte fliegt hin, Details öffnen sich
+  await list.getByRole('button', { name: /^Großer Arber\b/ }).click();
+  const panel = page.getByRole('complementary', { name: ARBER.name });
+  await expect(panel.getByRole('heading', { name: ARBER.name })).toBeVisible();
+  await page.waitForFunction(() => !window.__map!.isMoving());
+  const point = await page.evaluate(({ lon, lat }) => window.__map!.project([lon, lat]), ARBER);
+  const box = (await panel.boundingBox())!;
+  const covered =
+    point.x >= box.x &&
+    point.x <= box.x + box.width &&
+    point.y >= box.y &&
+    point.y <= box.y + box.height;
+  expect(covered).toBe(false);
+  expect(point.y).toBeGreaterThan(0);
+  await screenshot(page, 'liste-sprung', testInfo.project.name);
+
+  // Abhaken: Fortschritt und Filter passen sich an
+  await panel.getByRole('button', { name: 'Bestiegen', exact: true }).click();
+  await panel.getByRole('button', { name: 'Speichern' }).click();
+  await expect(panel.getByTestId('ascent-status')).toHaveText('1× bestiegen');
+  await panel.getByRole('button', { name: /^(Schließen|Zurück zur Liste)$/ }).click();
+
+  list = await openList(page);
+  await expect(list.getByTestId('progress')).toHaveText('1 / 129 Gipfel');
+  await list.getByRole('radio', { name: 'Bestiegen' }).click();
+  await expect(list.getByRole('listitem')).toHaveCount(1);
+  await expect(list.getByRole('listitem')).toContainText(/1× · zuletzt \d{2}\.\d{2}\.\d{4}/);
+  await list.getByRole('radio', { name: 'Offen' }).click();
+  await expect(list.getByRole('listitem')).toHaveCount(128);
+  await list.getByRole('radio', { name: 'Bestiegen' }).click();
+  await page.waitForTimeout(300);
+  await screenshot(page, 'liste-bestiegen', testInfo.project.name);
 });

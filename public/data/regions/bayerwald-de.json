@@ -152,14 +152,6 @@
     "region": "bayerwald-de"
   },
   {
-    "id": "osm:node/577336417",
-    "name": "V koutě",
-    "ele": 1276,
-    "lat": 48.972716,
-    "lon": 13.425877,
-    "region": "bayerwald-de"
-  },
-  {
     "id": "osm:node/2996235651",
     "name": "Ruckowitzberg",
     "ele": 1269,
@@ -333,14 +325,6 @@
     "ele": 1173,
     "lat": 49.141139,
     "lon": 13.159555,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/2969966047",
-    "name": "Malý Kokrháč",
-    "ele": 1169,
-    "lat": 49.190629,
-    "lon": 13.137136,
     "region": "bayerwald-de"
   },
   {

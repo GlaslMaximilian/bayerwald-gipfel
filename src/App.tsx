@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { LocalAscentRepository } from './data/ascents/LocalAscentRepository';
+import { useAscents } from './data/ascents/useAscents';
 import { loadPeaks } from './data/peaks';
 import type { Peak, Region } from './data/types';
 import MapView from './map/MapView';
 import StyleSwitch from './map/StyleSwitch';
 import { loadStyleChoice, saveStyleChoice, type MapStyleId } from './map/styles';
+import { ascentsOfPeak, countByPeak } from './domain/ascents';
 import PeakPanel from './ui/PeakPanel';
+
+const ascentRepository = new LocalAscentRepository();
 
 export default function App() {
   const apiKey = import.meta.env.VITE_MAPTILER_KEY as string | undefined;
@@ -13,6 +18,8 @@ export default function App() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [styleId, setStyleId] = useState<MapStyleId>(loadStyleChoice);
+  const ascents = useAscents(ascentRepository);
+  const ascentCounts = useMemo(() => countByPeak(ascents), [ascents]);
 
   useEffect(() => {
     loadPeaks()
@@ -31,6 +38,10 @@ export default function App() {
     saveStyleChoice(id);
   };
   const closePanel = useCallback(() => setSelectedId(null), []);
+  const addAscent = async (peakId: string, date: string, note: string) => {
+    await ascentRepository.add({ peakId, date, note });
+  };
+  const removeAscent = (id: string) => ascentRepository.remove(id);
 
   const selectedPeak = peaks.find((p) => p.id === selectedId);
 
@@ -53,6 +64,7 @@ export default function App() {
         apiKey={apiKey}
         styleId={styleId}
         peaks={peaks}
+        ascentCounts={ascentCounts}
         selectedId={selectedId}
         onSelect={setSelectedId}
       />
@@ -64,8 +76,12 @@ export default function App() {
       )}
       {selectedPeak && (
         <PeakPanel
+          key={selectedPeak.id}
           peak={selectedPeak}
           regionName={regions.find((r) => r.id === selectedPeak.region)?.name}
+          ascents={ascentsOfPeak(ascents, selectedPeak.id)}
+          onAddAscent={(date, note) => addAscent(selectedPeak.id, date, note)}
+          onRemoveAscent={removeAscent}
           onClose={closePanel}
         />
       )}

@@ -1,15 +1,32 @@
-import { useEffect } from 'react';
-import type { Peak } from '../data/types';
+import { useEffect, useState } from 'react';
+import type { Ascent, Peak } from '../data/types';
+import { ascentCountLabel } from '../domain/ascents';
+import AscentForm from './AscentForm';
+import AscentList from './AscentList';
 import classes from './PeakPanel.module.css';
 
 type Props = {
   peak: Peak;
   regionName: string | undefined;
+  /** Besteigungen dieses Gipfels, neueste zuerst. */
+  ascents: Ascent[];
+  onAddAscent: (date: string, note: string) => Promise<void>;
+  onRemoveAscent: (id: string) => Promise<void>;
   onClose: () => void;
 };
 
 /** Details zu einem Gipfel: mobil als Bottom Sheet, am Desktop als Seitenpanel links. */
-export default function PeakPanel({ peak, regionName, onClose }: Props) {
+export default function PeakPanel({
+  peak,
+  regionName,
+  ascents,
+  onAddAscent,
+  onRemoveAscent,
+  onClose,
+}: Props) {
+  const [formOpen, setFormOpen] = useState(false);
+  const climbed = ascents.length > 0;
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -37,6 +54,36 @@ export default function PeakPanel({ peak, regionName, onClose }: Props) {
           </svg>
         </button>
       </header>
+
+      <p className={climbed ? classes.statusClimbed : classes.status} data-testid="ascent-status">
+        {climbed ? (
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="m7.5 12.5 3 3 6-6.5" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.5" />
+          </svg>
+        )}
+        {ascentCountLabel(ascents.length)}
+      </p>
+
+      {formOpen ? (
+        <AscentForm
+          onSave={async (date, note) => {
+            await onAddAscent(date, note);
+            setFormOpen(false);
+          }}
+          onCancel={() => setFormOpen(false)}
+        />
+      ) : (
+        <button type="button" className={classes.primary} onClick={() => setFormOpen(true)}>
+          {climbed ? 'Erneut bestiegen' : 'Bestiegen'}
+        </button>
+      )}
+
+      {climbed && <AscentList ascents={ascents} onRemove={onRemoveAscent} />}
     </aside>
   );
 }

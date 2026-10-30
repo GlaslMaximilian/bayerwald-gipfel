@@ -22,11 +22,11 @@ export default function StatusNotices({ error }: { error: string | null }) {
       {!online && (
         <p className={classes.notice} role="status">
           <span className={classes.dot} aria-hidden="true" />
-          Offline – Karte nur für bereits angesehene Bereiche
+          <span>Offline – nur bereits angesehene Kartenbereiche</span>
         </p>
       )}
       {needRefresh && !updateDismissed && (
-        <div className={classes.notice} role="status">
+        <div className={`${classes.notice} ${classes.update}`} role="status">
           <span>Neue Version verfügbar</span>
           <button
             type="button"

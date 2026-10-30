@@ -15,7 +15,9 @@ describe('StatusNotices', () => {
   it('meldet offline und wieder online', () => {
     const onLine = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
     render(<StatusNotices error={null} />);
-    expect(screen.getByRole('status')).toHaveTextContent(/^Offline – Karte nur für bereits/);
+    expect(screen.getByRole('status')).toHaveTextContent(
+      /^Offline – nur bereits angesehene Kartenbereiche$/,
+    );
 
     onLine.mockReturnValue(true);
     act(() => {

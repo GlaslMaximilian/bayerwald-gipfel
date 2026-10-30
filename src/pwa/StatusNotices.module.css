@@ -15,13 +15,12 @@
 
 .notice {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 8px;
   margin: 0;
   padding: 8px 14px;
-  border-radius: 999px;
+  border-radius: 18px;
   background: var(--color-surface);
   box-shadow: var(--shadow);
   color: var(--color-text);
@@ -29,6 +28,10 @@
   font-weight: 550;
   text-align: center;
   pointer-events: auto;
+}
+
+.update {
+  flex-wrap: wrap;
 }
 
 .dot {
@@ -64,4 +67,12 @@
 .secondary:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* Desktop: über dem freien Kartenbereich rechts der Seitenleiste zentrieren */
+@media (min-width: 768px) {
+  .notices {
+    left: calc(50% + 192px);
+    max-width: calc(100% - 408px);
+  }
 }

@@ -48,27 +48,11 @@
     "region": "bayerwald-de"
   },
   {
-    "id": "osm:node/577336416",
-    "name": "Velká Mokrůvka",
-    "ele": 1370,
-    "lat": 48.954631,
-    "lon": 13.506526,
-    "region": "bayerwald-de"
-  },
-  {
     "id": "osm:node/1774677537",
     "name": "Bayerischer Plöckenstein",
     "ele": 1362,
     "lat": 48.772036,
     "lon": 13.826963,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/577323244",
-    "name": "Špičník",
-    "ele": 1351,
-    "lat": 48.961024,
-    "lon": 13.463758,
     "region": "bayerwald-de"
   },
   {
@@ -88,35 +72,11 @@
     "region": "bayerwald-de"
   },
   {
-    "id": "osm:node/270091940",
-    "name": "Vysoký hřeben",
-    "ele": 1341,
-    "lat": 48.774687,
-    "lon": 13.813786,
-    "region": "bayerwald-de"
-  },
-  {
     "id": "osm:node/2996234833",
     "name": "Mittagsplatzl",
     "ele": 1340,
     "lat": 49.093397,
     "lon": 13.142848,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/1401427466",
-    "name": "Plesná",
-    "ele": 1338,
-    "lat": 49.105064,
-    "lon": 13.31289,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/3459052673",
-    "name": "Svaroh",
-    "ele": 1334,
-    "lat": 49.173978,
-    "lon": 13.166453,
     "region": "bayerwald-de"
   },
   {
@@ -133,14 +93,6 @@
     "ele": 1333,
     "lat": 48.784749,
     "lon": 13.802777,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/7773745925",
-    "name": "Malá Mokrůvka",
-    "ele": 1331,
-    "lat": 48.969554,
-    "lon": 13.507388,
     "region": "bayerwald-de"
   },
   {
@@ -264,14 +216,6 @@
     "region": "bayerwald-de"
   },
   {
-    "id": "osm:node/3242754647",
-    "name": "Mrtvý vrch",
-    "ele": 1254,
-    "lat": 48.973296,
-    "lon": 13.522069,
-    "region": "bayerwald-de"
-  },
-  {
     "id": "osm:node/12229267567",
     "name": "Hochwiesriegel",
     "ele": 1243,
@@ -309,14 +253,6 @@
     "ele": 1232,
     "lat": 49.049898,
     "lon": 13.356322,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/577336410",
-    "name": "Velký Kokrháč",
-    "ele": 1229,
-    "lat": 49.186137,
-    "lon": 13.145171,
     "region": "bayerwald-de"
   },
   {
@@ -421,14 +357,6 @@
     "ele": 1166,
     "lat": 48.818571,
     "lon": 13.678244,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/576722561",
-    "name": "Nad Latschensee",
-    "ele": 1163,
-    "lat": 49.026389,
-    "lon": 13.404167,
     "region": "bayerwald-de"
   },
   {
@@ -541,14 +469,6 @@
     "ele": 1125,
     "lat": 49.137683,
     "lon": 13.146609,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/5503372191",
-    "name": "Čekání",
-    "ele": 1124,
-    "lat": 49.197046,
-    "lon": 13.129955,
     "region": "bayerwald-de"
   },
   {
@@ -1045,14 +965,6 @@
     "ele": 1022,
     "lat": 48.934392,
     "lon": 12.943565,
-    "region": "bayerwald-de"
-  },
-  {
-    "id": "osm:node/270092058",
-    "name": "Špičák",
-    "ele": 1021,
-    "lat": 48.807637,
-    "lon": 13.803722,
     "region": "bayerwald-de"
   },
   {

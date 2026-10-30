@@ -1,5 +1,17 @@
 {
-  "exclude": [],
+  "exclude": [
+    "osm:node/577336416",
+    "osm:node/577323244",
+    "osm:node/270091940",
+    "osm:node/1401427466",
+    "osm:node/3459052673",
+    "osm:node/7773745925",
+    "osm:node/3242754647",
+    "osm:node/577336410",
+    "osm:node/576722561",
+    "osm:node/5503372191",
+    "osm:node/270092058"
+  ],
   "include": [],
   "rename": {}
 }

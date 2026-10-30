@@ -33,6 +33,10 @@ export class LocalAscentRepository implements AscentRepository {
     this.write(this.read().filter((a) => a.id !== id));
   }
 
+  async importAscents(ascents: Ascent[]): Promise<void> {
+    if (ascents.length > 0) this.write([...this.read(), ...ascents]);
+  }
+
   subscribe(listener: (ascents: Ascent[]) => void): () => void {
     this.listeners.add(listener);
     listener(this.read());

@@ -42,6 +42,20 @@ describe('LocalAscentRepository', () => {
     expect(await repo.list()).toEqual([b]);
   });
 
+  it('importiert Besteigungen mit ihrer id und createdAt', async () => {
+    const repo = new LocalAscentRepository();
+    const existing = await repo.add({ peakId: 'osm:node/1', date: '2026-10-30' });
+    const imported = {
+      id: 'aus-backup',
+      peakId: 'osm:node/2',
+      date: '2025-06-01',
+      note: 'Gewitter',
+      createdAt: '2025-06-01T18:00:00.000Z',
+    };
+    await repo.importAscents([imported]);
+    expect(await new LocalAscentRepository().list()).toEqual([existing, imported]);
+  });
+
   it('meldet den Stand beim Abonnieren und jede Änderung', async () => {
     const repo = new LocalAscentRepository();
     const listener = vi.fn();

@@ -10,6 +10,8 @@ export interface AscentRepository {
   list(): Promise<Ascent[]>;
   add(ascent: NewAscent): Promise<Ascent>;
   remove(id: string): Promise<void>;
+  /** Übernimmt fertige Besteigungen (Import) mit ihrer `id` und `createdAt`, in einem Schritt. */
+  importAscents(ascents: Ascent[]): Promise<void>;
   /** Meldet sofort den aktuellen Stand und danach jede Änderung. Gibt eine Abmeldefunktion zurück. */
   subscribe(listener: (ascents: Ascent[]) => void): () => void;
 }

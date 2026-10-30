@@ -6,7 +6,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ## Version 1 (MVP)
 
-### [ ] M0 – Projektgerüst & Deployment
+### [x] M0 – Projektgerüst & Deployment
 **Ziel:** Leere App läuft lokal und ist auf GitHub Pages erreichbar.
 - Vite + React + TypeScript (strict) aufsetzen
 - ESLint, Prettier, Vitest, Playwright einrichten, npm-Skripte wie in `CLAUDE.md`
@@ -131,3 +131,12 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ## Log
 <!-- Claude Code: nach jedem Meilenstein Datum, kurze Zusammenfassung, Entscheidungen, offene Punkte -->
+
+### 2026-10-30 – M0 Projektgerüst & Deployment ✔
+- Vite 8 + React 19 + TypeScript 6.0 (strict, `noUncheckedIndexedAccess`). TypeScript 7 bewusst nicht, weil typescript-eslint es noch nicht unterstützt.
+- ESLint 10 (Flat Config, typescript-eslint, react-hooks) + Prettier; `CLAUDE.md` und `docs/` sind von Prettier ausgenommen. `.gitattributes` erzwingt LF.
+- Vitest (jsdom, Testing Library) für Logik/Komponenten; Playwright-Smoke-Test gegen den Produktions-Build (`preview`), Projekte „mobil“ (390×844) und „desktop“ (1280×800), je hell/dunkel, Screenshots in `e2e/screenshots/` (nicht committet).
+- Workflow `.github/workflows/deploy.yml`: Lint, Typecheck, Vitest, Build → Deploy auf Pages bei Push auf `main`. Playwright läuft nur lokal. MapTiler-/Firebase-Secrets werden schon an den Build durchgereicht (leer bis M2/M7).
+- Repo: https://github.com/GlaslMaximilian/bayerwald-gipfel (public, wegen Pages im Free-Plan). Live: https://glaslmaximilian.github.io/bayerwald-gipfel/
+- GitHub CLI (`gh`) lokal per winget installiert und angemeldet.
+- Offen: `ubuntu-latest` wechselt auf Ubuntu 26, beobachten.

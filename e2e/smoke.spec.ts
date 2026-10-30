@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 
 const ARBER = {
   id: 'osm:node/26863050',
@@ -39,7 +40,7 @@ async function screenshot(page: Page, name: string, project: string) {
 }
 
 test.beforeEach(async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(90_000); // Kartenkacheln laden je nach Rechner und Netz langsam
   await page.goto('./');
   await page.evaluate(() => localStorage.clear());
 });
@@ -231,4 +232,87 @@ test('Liste: Fortschritt, Sortierung, Filter und Sprung zur Karte', async ({ pag
   await list.getByRole('radio', { name: 'Bestiegen' }).click();
   await page.waitForTimeout(300);
   await screenshot(page, 'liste-bestiegen', testInfo.project.name);
+});
+
+/** Prüft den Fortschritt: mobil an der Pille, am Desktop in der Seitenleiste. */
+async function expectProgress(page: Page, climbed: number, project: string) {
+  if (project === 'desktop') {
+    await expect(page.getByTestId('progress')).toHaveText(`${climbed} / 129 Gipfel`);
+  } else {
+    await expect(
+      page.getByRole('button', { name: `Gipfelliste öffnen, ${climbed} von 129 bestiegen` }),
+    ).toBeVisible();
+  }
+}
+
+test('Export → Daten löschen → Import stellt alles wieder her', async ({ page }, testInfo) => {
+  const project = testInfo.project.name;
+  await page.goto('./');
+  await waitForPeaks(page);
+  await page.evaluate(
+    ({ lon, lat }) => window.__map!.jumpTo({ center: [lon, lat], zoom: 12 }),
+    ARBER,
+  );
+  await waitForPeaks(page);
+  await clickArber(page);
+
+  const panel = page.getByRole('complementary', { name: ARBER.name });
+  await panel.getByRole('button', { name: 'Bestiegen', exact: true }).click();
+  await panel.getByLabel('Notiz (optional)').fill('Sonnenaufgang');
+  await panel.getByRole('button', { name: 'Speichern' }).click();
+  await expect(panel.getByTestId('ascent-status')).toHaveText('1× bestiegen');
+  await panel.getByRole('button', { name: /^(Schließen|Zurück zur Liste)$/ }).click();
+  await expectProgress(page, 1, project);
+
+  // Exportieren
+  await page.getByRole('button', { name: 'Einstellungen' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Einstellungen' });
+  await expect(dialog.getByText(/Sichere deine 1 Besteigung /)).toBeVisible();
+  await screenshot(page, 'einstellungen', project);
+  const downloadPromise = page.waitForEvent('download');
+  await dialog.getByRole('button', { name: 'Exportieren' }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/^bayerwald-gipfel-backup-\d{4}-\d{2}-\d{2}\.json$/);
+  const file = await download.path();
+  const backup = JSON.parse(await readFile(file, 'utf8')) as {
+    app: string;
+    version: number;
+    ascents: { note?: string }[];
+  };
+  expect(backup).toMatchObject({ app: 'bayerwald-gipfel', version: 1 });
+  expect(backup.ascents).toHaveLength(1);
+  expect(backup.ascents[0]!.note).toBe('Sonnenaufgang');
+
+  // Daten löschen
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await waitForPeaks(page);
+  await expectProgress(page, 0, project);
+
+  // Importieren
+  await page.getByRole('button', { name: 'Einstellungen' }).click();
+  await dialog.locator('input[type=file]').setInputFiles(file);
+  await expect(dialog.getByTestId('import-preview')).toHaveText('1 neu, 0 schon vorhanden');
+  await screenshot(page, 'import-vorschau', project);
+  await dialog.getByRole('button', { name: 'Importieren', exact: true }).click();
+  await expect(dialog.getByRole('status')).toHaveText('1 Besteigung importiert.');
+
+  // Ein zweiter Import bringt keine Duplikate
+  await dialog.locator('input[type=file]').setInputFiles(file);
+  await expect(dialog.getByTestId('import-preview')).toHaveText('0 neu, 1 schon vorhanden');
+  await expect(dialog.getByRole('button', { name: 'Importieren', exact: true })).toBeDisabled();
+  await dialog.getByRole('button', { name: 'Schließen' }).click();
+  await expect(dialog).toBeHidden();
+
+  // Alles wieder da
+  await expectProgress(page, 1, project);
+  await page.evaluate(
+    ({ lon, lat }) => window.__map!.jumpTo({ center: [lon, lat], zoom: 12 }),
+    ARBER,
+  );
+  await waitForPeaks(page);
+  await expect.poll(() => arberMarkerCount(page)).toBe(1);
+  await clickArber(page);
+  await expect(panel.getByTestId('ascent-status')).toHaveText('1× bestiegen');
+  await expect(panel.getByText('Sonnenaufgang')).toBeVisible();
 });

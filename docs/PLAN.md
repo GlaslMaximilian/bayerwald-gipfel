@@ -74,7 +74,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M5 – Export/Import
+### [x] M5 – Export/Import
 **Ziel:** Backup unabhängig von der Cloud.
 - Einstellungsmenü: „Exportieren“ lädt eine JSON-Datei mit allen Ascents (+ Version, Datum)
 - „Importieren“ mit Vorschau (X neu, Y schon vorhanden), Zusammenführen über `id`, ohne Duplikate
@@ -173,3 +173,11 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - Karte: `flyTo` mit `offset`, so dass Seitenleiste bzw. Bottom Sheet den Gipfel nicht verdecken. Beim Antippen auf der Karte wird nur verschoben, wenn der Gipfel sonst verdeckt wäre (löst die Beobachtung aus M3). Startansicht berücksichtigt am Desktop die Seitenleiste.
 - Filter und Sortierung werden bewusst nicht gespeichert (nach dem Neuladen: Alle, nach Höhe).
 - E2E: Fortschritt 0 → 1, Sortierung nach Name, Filter Bestiegen/Offen, Liste → Karte (Gipfel nicht verdeckt), mobil und Desktop.
+
+### 2026-10-30 – M5 Export/Import ✔
+- Format (`src/domain/backup.ts`): `{ app: "bayerwald-gipfel", version: 1, exportedAt, ascents }`, Dateiname `bayerwald-gipfel-backup-JJJJ-MM-TT.json`. Beim Einlesen wird jede Besteigung geprüft (id, peakId, gültiges Datum, createdAt); unbekannte Felder fallen weg. Fehler → deutsche Meldung, nichts wird geändert.
+- Zusammenführen über `id`: Vorhandenes wird nie überschrieben, nur Neues kommt dazu, doppelte IDs in der Datei zählen einmal. Vorschau „X neu, Y schon vorhanden“; bei 0 neu ist „Importieren“ deaktiviert.
+- Besteigungen zu Gipfeln, die die App nicht kennt, werden trotzdem übernommen (Nutzerdaten; Region kann später dazukommen).
+- `AscentRepository.importAscents()` übernimmt Besteigungen mit Original-`id`/`createdAt` in einem Schritt (später auch für Firestore).
+- Oberfläche: Zahnrad oben rechts neben dem Stil-Umschalter öffnet einen nativen `<dialog>` „Einstellungen“ mit Abschnitt „Datensicherung“. jsdom kennt `showModal` nicht → kleiner Ersatz in `test-setup.ts`.
+- E2E: Abhaken → Export → localStorage leeren → Import → Fortschritt und Notiz wieder da; zweiter Import zeigt „0 neu, 1 schon vorhanden“. Zeitlimit pro E2E-Test auf 90 s erhöht, weil die Karte bei ausgelastetem Rechner deutlich langsamer lädt.

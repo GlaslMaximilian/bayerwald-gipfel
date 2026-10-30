@@ -5,6 +5,8 @@ const baseURL = 'http://localhost:4173/bayerwald-gipfel/';
 export default defineConfig({
   testDir: 'e2e',
   fullyParallel: true,
+  // Karte mit Software-WebGL ist rechenintensiv; schont auch das MapTiler-Kontingent.
+  workers: 2,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'github' : 'list',
   use: { baseURL },
@@ -24,9 +26,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run build && npm run preview -- --port 4173 --strictPort',
+    command: 'npm run build -- --mode e2e && npm run preview -- --port 4173 --strictPort',
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

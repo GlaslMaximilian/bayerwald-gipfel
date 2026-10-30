@@ -2,3 +2,10 @@
   position: absolute;
   inset: 0;
 }
+
+/* Mobil wird mit zwei Fingern gezoomt; die Zoom-Knöpfe würden vom Bottom Sheet verdeckt. */
+@media (max-width: 767px) {
+  .map :global(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-group) {
+    display: none;
+  }
+}

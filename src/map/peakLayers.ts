@@ -29,17 +29,17 @@ const selectedFilter = (selectedId: string | null): FilterSpecification => [
   selectedId ?? '',
 ];
 
+/** Setzt die Gipfeldaten, sobald die Quelle existiert (sonst übernimmt das `addPeakLayers`). */
+export function updatePeakData(map: MapLibreMap, peaks: Peak[]) {
+  map.getSource<GeoJSONSource>(SOURCE_ID)?.setData(toGeoJson(peaks));
+}
+
 /**
- * Fügt Quelle und Ebenen der Gipfel hinzu (oder aktualisiert sie).
- * Muss nach jedem Stilwechsel erneut aufgerufen werden, weil `setStyle` alle eigenen Ebenen entfernt.
+ * Fügt Quelle und Ebenen der Gipfel hinzu.
+ * Muss bei jedem `style.load` aufgerufen werden, weil `setStyle` alle eigenen Ebenen entfernt.
  */
-export function syncPeakLayers(map: MapLibreMap, peaks: Peak[], selectedId: string | null) {
-  const source = map.getSource<GeoJSONSource>(SOURCE_ID);
-  if (source) {
-    source.setData(toGeoJson(peaks));
-    setSelectedPeak(map, selectedId);
-    return;
-  }
+export function addPeakLayers(map: MapLibreMap, peaks: Peak[], selectedId: string | null) {
+  if (map.getSource(SOURCE_ID)) return;
 
   map.addSource(SOURCE_ID, { type: 'geojson', data: toGeoJson(peaks) });
 
@@ -51,7 +51,7 @@ export function syncPeakLayers(map: MapLibreMap, peaks: Peak[], selectedId: stri
       'circle-color': PEAK_COLOR,
       'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 4, 13, 7],
       'circle-stroke-color': '#ffffff',
-      'circle-stroke-width': 1.5,
+      'circle-stroke-width': 2,
     },
   });
 

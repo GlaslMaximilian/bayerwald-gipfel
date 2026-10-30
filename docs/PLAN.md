@@ -36,7 +36,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M2 – Karte
+### [x] M2 – Karte
 **Ziel:** Alle Gipfel auf einer Karte.
 - MapLibre-Vollbildkarte, Startansicht auf den Bayerischen Wald
 - Umschalter Topo (`outdoor-v2`) / Satellit, Auswahl wird gespeichert
@@ -148,3 +148,12 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - Review-Entscheidungen (in `scripts/peaks-overrides.json`): alle tschechischen Grenzgipfel raus, ebenso die tschechisch benannten V koutě und Malý Kokrháč. Bayerischer Plöckenstein (4 m jenseits der Grenze) bleibt, Hufberg/Plöckenstein-Hauptgipfel (CZ) nicht aufgenommen. Dreisessel und Hochstein bleiben beide.
 - Ergebnis: **129 Gipfel** ab 1000 m, freigegeben.
 - Bekannte Grenze: Gipfel ohne `ele`-Tag in OSM werden nicht erfasst; fehlende Gipfel ggf. per `include` mit `ele` nachtragen.
+
+### 2026-10-30 – M2 Karte ✔
+- MapLibre GL 6 (einzige neue Abhängigkeit). Der Worker wird über `maplibre-gl/dist/maplibre-gl-worker.mjs?url` + `setWorkerUrl` eingebunden – ohne das lädt die Karte im Vite-Build nicht.
+- `src/data/peaks.ts` lädt `regions.json` und alle Pakete relativ zu `BASE_URL` (neue Region = nur Daten).
+- Stile Topo (`outdoor-v2`) / Satellit (`satellite`), Wahl in `localStorage` (`bayerwald-gipfel.mapStyle`). Grundstil wird nach jedem `style.load` angepasst (`src/map/baseStyle.ts`): Beschriftung `name:de` statt `name:en`, Höhen in m, POIs und die Gipfel des Grundstils ausgeblendet (sonst doppelt und mit tschechischen Gipfeln).
+- Gipfel als GeoJSON-Quelle + Kreis-Ebene, Namen/Höhe ab Zoom 11, Auswahl orange hervorgehoben. Antippen wählt den nächstgelegenen Gipfel im 14-px-Umkreis. Neutrale Marker – offen/bestiegen folgt in M3.
+- Detail-Panel: < 768 px Bottom Sheet, sonst Seitenpanel links; schließen per ×, Escape oder Tippen auf leere Karte. Zoom-Knöpfe mobil ausgeblendet.
+- Ohne `VITE_MAPTILER_KEY` zeigt die App einen Hinweis. Schlüssel liegt in `.env` und als GitHub-Secret; im MapTiler-Dashboard auf `glaslmaximilian.github.io` und `localhost` beschränkt (geprüft: ohne Origin 403).
+- Playwright baut mit `--mode e2e`; nur dann hängt die Karte an `window.__map`. 2 Worker, Wartebedingung „Stil geladen + Gipfel gerendert“. Dabei gefunden und behoben: Beim Start mit Satellit blieb die Gipfel-Quelle leer.

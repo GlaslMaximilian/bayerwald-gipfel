@@ -1,15 +1,25 @@
-import { Map as MapLibreMap, NavigationControl, type LngLatBoundsLike } from 'maplibre-gl';
+import {
+  Map as MapLibreMap,
+  NavigationControl,
+  setWorkerUrl,
+  type LngLatBoundsLike,
+} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { useEffect, useRef } from 'react';
 import type { Peak } from '../data/types';
-import { PEAK_LAYER_IDS, setSelectedPeak, syncPeakLayers } from './peakLayers';
+import { adjustBaseStyle } from './baseStyle';
+import { addPeakLayers, PEAK_LAYER_IDS, setSelectedPeak, updatePeakData } from './peakLayers';
 import { styleUrl, type MapStyleId } from './styles';
 import classes from './MapView.module.css';
 
-/** Startansicht: deutscher Bayerischer Wald inkl. Vorderem Bayerischen Wald. */
+// MapLibre findet seinen Worker im Vite-Bundle nicht selbst; Vite kopiert ihn über `?url` mit.
+setWorkerUrl(workerUrl);
+
+/** Startansicht: alle Gipfel des deutschen Bayerischen Walds mit etwas Rand. */
 const START_BOUNDS: LngLatBoundsLike = [
-  [12.55, 48.55],
-  [13.95, 49.4],
+  [12.75, 48.7],
+  [13.9, 49.3],
 ];
 /** Fingerbreite Toleranz beim Antippen eines Gipfels (Pixel). */
 const HIT_TOLERANCE_PX = 14;
@@ -53,7 +63,8 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
     map.addControl(new NavigationControl({ showCompass: false }), 'bottom-right');
 
     map.on('style.load', () => {
-      syncPeakLayers(map, latest.current.peaks, latest.current.selectedId);
+      adjustBaseStyle(map);
+      addPeakLayers(map, latest.current.peaks, latest.current.selectedId);
     });
 
     map.on('click', (e) => {
@@ -68,8 +79,18 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
             { layers: [PEAK_LAYER_IDS.circle] },
           )
         : [];
-      const id = features[0]?.properties.id as string | undefined;
-      latest.current.onSelect(id ?? null);
+      // Bei dicht liegenden Gipfeln den nächstgelegenen nehmen, nicht den obersten.
+      let nearest: { id: string; distance: number } | null = null;
+      for (const feature of features) {
+        if (feature.geometry.type !== 'Point') continue;
+        const [lon, lat] = feature.geometry.coordinates as [number, number];
+        const p = map.project([lon, lat]);
+        const distance = Math.hypot(p.x - x, p.y - y);
+        if (!nearest || distance < nearest.distance) {
+          nearest = { id: feature.properties.id as string, distance };
+        }
+      }
+      latest.current.onSelect(nearest?.id ?? null);
     });
 
     map.on('mousemove', (e) => {
@@ -102,7 +123,7 @@ export default function MapView({ apiKey, styleId, peaks, selectedId, onSelect }
   // Gipfeldaten nachführen.
   useEffect(() => {
     const map = mapRef.current;
-    if (map?.isStyleLoaded()) syncPeakLayers(map, peaks, latest.current.selectedId);
+    if (map) updatePeakData(map, peaks);
   }, [peaks]);
 
   // Auswahl hervorheben.

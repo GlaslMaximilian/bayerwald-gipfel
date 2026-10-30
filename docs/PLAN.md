@@ -63,7 +63,7 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 
 ---
 
-### [ ] M4 – Fortschritt & Liste
+### [x] M4 – Fortschritt & Liste
 **Ziel:** Überblick ohne Karte.
 - Fortschrittsanzeige „X / Y Gipfel“ + Balken, immer sichtbar, aber dezent
 - Listenansicht: sortierbar nach Höhe / Name / zuletzt bestiegen, Filter Alle / Offen / Bestiegen
@@ -165,3 +165,11 @@ Regeln stehen in `CLAUDE.md`. Immer nur **einen** Meilenstein pro Durchgang. Jed
 - Marker (Canvas-Icons): offen = dunkelgrauer Ring, bestiegen = grüner Kreis mit Häkchen, größer und obenauf. Anzahl nur im Panel. Marker aktualisieren sich sofort über `count` im GeoJSON.
 - E2E: Abhaken → Marker ändert sich → Neuladen → zweite Besteigung → Löschen, mobil und Desktop.
 - Beobachtung (nicht im Plan): Mobil kann das Bottom Sheet den gewählten Gipfel verdecken. Ggf. in M4 beim „Liste → Karte fliegt zum Gipfel“ mit Padding lösen.
+
+### 2026-10-30 – M4 Fortschritt & Liste ✔
+- Domain (`src/domain/peakList.ts`): Fortschritt (Gipfel mit mind. einer Besteigung / alle), Filter Alle/Offen/Bestiegen, Sortierung Höhe (Standard), Name (deutsche Sortierregel, Umlaute korrekt) und zuletzt bestiegen (nie bestiegene ans Ende, nach Höhe).
+- Desktop: feste Seitenleiste links (360 px) mit Fortschritt, Filter, Sortierung und Liste. Ein gewählter Gipfel zeigt seine Details in derselben Leiste, „Zurück zur Liste“ führt zurück (Scrollposition bleibt erhalten).
+- Mobil: dezente Pille oben links („0 / 129“, Mini-Balken, „Liste“) öffnet die Liste als Bottom Sheet. Tippen auf einen Eintrag schließt die Liste, die Karte fliegt hin, die Details öffnen sich.
+- Karte: `flyTo` mit `offset`, so dass Seitenleiste bzw. Bottom Sheet den Gipfel nicht verdecken. Beim Antippen auf der Karte wird nur verschoben, wenn der Gipfel sonst verdeckt wäre (löst die Beobachtung aus M3). Startansicht berücksichtigt am Desktop die Seitenleiste.
+- Filter und Sortierung werden bewusst nicht gespeichert (nach dem Neuladen: Alle, nach Höhe).
+- E2E: Fortschritt 0 → 1, Sortierung nach Name, Filter Bestiegen/Offen, Liste → Karte (Gipfel nicht verdeckt), mobil und Desktop.
